@@ -1,0 +1,34 @@
+name: astrbot_plugin_firewall
+
+display_name: AstrBot Firewall 安全防火墙
+
+desc: 独立安全防护插件：私聊 prompt injection 拦截、群聊临时会话私聊阻断、白名单与审计日志。
+
+help: 使用 /firewall_status 查看防火墙状态；在插件配置中维护白名单、静默拦截和审计开关。
+
+version: v0.1.0
+
+author: chiriu & 橘雪莉
+
+repo: "https://github.com/kazamisama/astrbot_plugin_firewall"
+
+support_platforms:
+
+  - aiocqhttp
+
+  - qq_official
+
+  - telegram
+
+  - wecom
+
+  - lark
+
+  - dingtalk
+
+  - kook
+
+  - webchat
+
+astrbot_version: ">=4.8.0"
+

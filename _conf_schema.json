@@ -1,0 +1,138 @@
+{
+
+  "enabled": {
+
+    "description": "① 基础开关 / 启用安全防火墙",
+
+    "type": "bool",
+
+    "default": true,
+
+    "hint": "关闭后不再拦截消息、不再处理 LLM 请求、不写审计日志。"
+
+  },
+
+  "whitelist": {
+
+    "description": "① 基础开关 / 白名单用户或会话",
+
+    "type": "list",
+
+    "default": [],
+
+    "hint": "填写用户 ID 或 UMO 会话 ID。命中后跳过临时会话阻断和私聊注入拦截。示例：123456789 或 aiocqhttp:FriendMessage:123456789。"
+
+  },
+
+  "allow_webchat_by_default": {
+
+    "description": "① 基础开关 / 默认放行 webchat 会话",
+
+    "type": "bool",
+
+    "default": true,
+
+    "hint": "开启后，UMO 会话 ID 以 webchat: 开头的会话默认视为白名单，跳过临时会话阻断和私聊注入拦截。"
+
+  },
+
+  "block_group_temporary_private": {
+
+    "description": "② 私聊入口防护 / 阻断群聊临时会话私聊",
+
+    "type": "bool",
+
+    "default": true,
+
+    "hint": "主要用于 aiocqhttp / OneBot。识别 private + group/temp sub_type，或 raw_message/sender 中携带 group_id 的私聊，将其视为从群聊发起的临时会话并拦截。"
+
+  },
+
+  "private_prompt_injection_block_enabled": {
+
+    "description": "③ 私聊 Prompt 注入防护 / 直接阻断高风险私聊",
+
+    "type": "bool",
+
+    "default": true,
+
+    "hint": "对私聊正文和进入 LLM 的 prompt 做规则扫描。命中忽略规则、泄露系统提示、角色伪装、system:/developer: 伪标签等高风险片段时直接拦截。"
+
+  },
+
+  "private_prompt_injection_tag_enabled": {
+
+    "description": "③ 私聊 Prompt 注入防护 / 仅标记风险片段",
+
+    "type": "bool",
+
+    "default": false,
+
+    "hint": "高级选项。关闭直接阻断后，可开启本项将命中片段包裹为 <INJECTION_RISK>...</INJECTION_RISK> 后再交给模型。默认关闭，因为私聊入口建议直接阻断。"
+
+  },
+
+  "silent_block": {
+
+    "description": "④ 拦截响应 / 静默拦截",
+
+    "type": "bool",
+
+    "default": false,
+
+    "hint": "开启后命中消息阶段拦截时只 stop_event 和写日志，不向对方发送拦截提示。"
+
+  },
+
+  "block_notice": {
+
+    "description": "④ 拦截响应 / 消息阶段拦截提示",
+
+    "type": "string",
+
+    "default": "请求已被安全防火墙拦截。若你认为这是误判，请联系 Bot 管理者加入白名单。",
+
+    "hint": "支持 {reason} 占位符。留空则不发送提示。"
+
+  },
+
+  "llm_block_reply": {
+
+    "description": "④ 拦截响应 / LLM 阶段兜底回复",
+
+    "type": "string",
+
+    "default": "请求已被安全防火墙拦截。",
+
+    "hint": "当消息阶段未拦住但 LLM 请求阶段命中注入风险时，用这段文本替换用户 prompt，避免原始攻击进入模型。"
+
+  },
+
+  "audit_log_enabled": {
+
+    "description": "⑤ 审计日志 / 启用审计日志",
+
+    "type": "bool",
+
+    "default": true,
+
+    "hint": "将拦截记录写入插件数据目录 audit.jsonl，包含时间、动作、原因、发送者、会话、平台、消息预览和命中片段。"
+
+  },
+
+  "audit_preview_chars": {
+
+    "description": "⑤ 审计日志 / 消息预览最大字符数",
+
+    "type": "int",
+
+    "default": 160,
+
+    "hint": "审计日志只保存消息前 N 个字符，降低隐私数据落盘。填 0 不保存正文预览。",
+
+    "slider": {"min": 0, "max": 1000, "step": 20}
+
+  }
+
+}
+
