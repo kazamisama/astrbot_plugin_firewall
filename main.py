@@ -284,7 +284,7 @@ class AstrBotFirewallPlugin(Star):
         return FirewallDecision("allow", "未命中风险规则", [])
 
     async def _reply_block_notice(self, event: AstrMessageEvent, reason: str) -> None:
-        if self._cfg_bool("silent_block", False):
+        if self._cfg_bool("silent_block", True):
             return
         message = str(
             self.config.get(
@@ -401,6 +401,6 @@ class AstrBotFirewallPlugin(Star):
             f"- allow_webchat_by_default: {self._cfg_bool('allow_webchat_by_default', True)}\n"
             f"- block_group_temporary_private: {self._cfg_bool('block_group_temporary_private', True)}\n"
             f"- private_prompt_injection_block_enabled: {self._cfg_bool('private_prompt_injection_block_enabled', True)}\n"
-            f"- silent_block: {self._cfg_bool('silent_block', False)}\n"
+            f"- silent_block: {self._cfg_bool('silent_block', True)}\n"
             f"- audit_records: {audit_lines}"
         )

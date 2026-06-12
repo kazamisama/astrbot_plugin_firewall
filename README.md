@@ -38,6 +38,8 @@
 
 - `allow_webchat_by_default = true`：`webchat:` 会话默认放行，避免本地 WebChat 调试被防火墙误拦。
 
+- `silent_block = true`：默认静默拦截，命中消息阶段拦截时只阻断和写审计日志，不主动回复提示。
+
 - `audit_log_enabled = true`
 
 
@@ -45,6 +47,10 @@
 也就是说，插件安装后会立即保护私聊入口；如果某些可信私聊被误拦，可以把用户 ID 或会话 ID 加入 `whitelist`。
 
 
+
+## 版本记录
+
+详见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 命令
 

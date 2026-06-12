@@ -78,7 +78,7 @@
 
     "type": "bool",
 
-    "default": false,
+    "default": true,
 
     "hint": "开启后命中消息阶段拦截时只 stop_event 和写日志，不向对方发送拦截提示。"
 
