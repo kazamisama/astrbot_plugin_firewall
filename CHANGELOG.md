@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.1.2
+
+- LLM 阶段扫描 `req.prompt` 前默认剥离 `<RAG-Faiss-Memory>...</RAG-Faiss-Memory>` 可信记忆块，降低 LivingMemory/RAG 注入内容触发误判的概率。
+- 新增 `strip_trusted_prompt_blocks` 配置项，可关闭可信块剥离。
+- 新增审计日志轮转配置：`audit_rotate_bytes` 与 `audit_rotate_keep`。
+- 新增回归测试：可信记忆块不误拦、剥离后仍拦截用户注入、审计日志轮转。
+
 ## v0.1.1
 
 - 新增 `whitelist` 配置项（默认 `[]`），命中用户 ID 或 `UMO` 会话 ID 的事件跳过临时会话阻断和私聊注入拦截。

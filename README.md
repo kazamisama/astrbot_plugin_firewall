@@ -16,9 +16,11 @@
 
 - **LLM 请求兜底防护**：即使消息阶段被其他插件绕过，`on_llm_request` 阶段仍会替换高风险 prompt，防止攻击文本进入模型。
 
+- **可信上下文剥离**：LLM 阶段扫描前默认剥离 LivingMemory 的 `<RAG-Faiss-Memory>...</RAG-Faiss-Memory>` 块，避免历史记忆提示触发误拦。
+
 - **白名单**：支持用户 ID 或 UMO 会话 ID。
 
-- **审计日志**：拦截记录写入插件数据目录 `audit.jsonl`。
+- **审计日志**：拦截记录写入插件数据目录 `audit.jsonl`，支持按大小轮转。
 
 
 
@@ -38,9 +40,13 @@
 
 - `allow_webchat_by_default = true`：`webchat:` 会话默认放行，避免本地 WebChat 调试被防火墙误拦。
 
+- `strip_trusted_prompt_blocks = true`：LLM 阶段扫描前剥离可信插件注入块，降低 RAG/长期记忆误判。
+
 - `silent_block = true`：默认静默拦截，命中消息阶段拦截时只阻断和写审计日志，不主动回复提示。
 
 - `audit_log_enabled = true`
+
+- `audit_rotate_bytes = 1048576`，`audit_rotate_keep = 3`
 
 
 
@@ -123,6 +129,22 @@
 
 
 这样 LLM 阶段会把风险片段包裹为 `<INJECTION_RISK>...</INJECTION_RISK>`，但不建议长期用于私聊入口。
+
+### 4. 审计日志轮转
+
+```json
+
+{
+
+  "audit_rotate_bytes": 1048576,
+
+  "audit_rotate_keep": 3
+
+}
+
+```
+
+超过大小时，当前 `audit.jsonl` 会轮转为 `audit.jsonl.1`，最多保留 N 个旧文件。
 
 
 

@@ -72,6 +72,18 @@
 
   },
 
+  "strip_trusted_prompt_blocks": {
+
+    "description": "③ 私聊 Prompt 注入防护 / 扫描前剥离可信上下文块",
+
+    "type": "bool",
+
+    "default": true,
+
+    "hint": "开启后，LLM 阶段扫描 req.prompt 前会剥离 LivingMemory 等可信插件注入的上下文块，避免把历史记忆提示中的 BEGIN REMINDER 等标记误判为用户攻击。"
+
+  },
+
   "silent_block": {
 
     "description": "④ 拦截响应 / 静默拦截",
@@ -131,6 +143,34 @@
     "hint": "审计日志只保存消息前 N 个字符，降低隐私数据落盘。填 0 不保存正文预览。",
 
     "slider": {"min": 0, "max": 1000, "step": 20}
+
+  },
+
+  "audit_rotate_bytes": {
+
+    "description": "⑤ 审计日志 / 单个审计文件最大字节数",
+
+    "type": "int",
+
+    "default": 1048576,
+
+    "hint": "audit.jsonl 写入前超过该大小会轮转为 audit.jsonl.1。填 0 表示不轮转。",
+
+    "slider": {"min": 0, "max": 10485760, "step": 65536}
+
+  },
+
+  "audit_rotate_keep": {
+
+    "description": "⑤ 审计日志 / 保留轮转文件数",
+
+    "type": "int",
+
+    "default": 3,
+
+    "hint": "保留 audit.jsonl.1 到 audit.jsonl.N。填 0 表示超过大小时只清空当前日志，不保留旧文件。",
+
+    "slider": {"min": 0, "max": 20, "step": 1}
 
   }
 
